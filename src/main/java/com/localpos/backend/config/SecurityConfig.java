@@ -97,7 +97,7 @@ public class SecurityConfig {
                 "http://localhost:5173",
                 "https://kiranastore-5ui3wi12q-suraj-sharmas-projects-bf753c9f.vercel.app/",
                 "https://kiranastore-git-main-suraj-sharmas-projects-bf753c9f.vercel.app",
-                "https://kiranastore-git-main-suraj-sharmas-projects-bf753c9f.vercel.app",
+                "https://kiranastore-inky.vercel.app/",
                 "http://localhost:3000"
         ));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
