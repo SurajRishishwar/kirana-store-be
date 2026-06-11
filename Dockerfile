@@ -10,8 +10,6 @@ RUN ./mvnw package -DskipTests -q
 
 FROM public.ecr.aws/amazoncorretto/amazoncorretto:17
 WORKDIR /app
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup
-USER appuser
 VOLUME /tmp
 COPY --from=builder /app/target/*.jar app.jar
 EXPOSE 8081
