@@ -1,0 +1,32 @@
+version: 0.2
+env:
+  shell: bash
+phases:
+  pre_build:
+    commands:
+      - |
+        echo "Building Docker image..."
+        docker build -t kirana-image:latest -f Dockerfile .
+        echo "Image Created..."
+     
+  build:
+    commands:
+      - |
+        export ECR_URI="505038841552.dkr.ecr.us-west-2.amazonaws.com/kirana-be"
+        echo "ECR_URI- ${ECR_URI}"
+        echo "Logging in to Amazon ECR..."
+        aws --version
+        aws ecr get-login-password --region cn-north-1 | docker login --username AWS --password-stdin $ECR_URI
+       
+        echo "Tagging image with latest"
+       
+        docker tag replication-cn-image:latest $ECR_URI:latest
+        echo "Pushing Docker images to ECR..."
+        docker push $ECR_URI:latest
+        echo "Build pushed successfully"
+ 
+ 
+ 
+ 
+ 
+ 
