@@ -1,4 +1,4 @@
-FROM public.ecr.aws/amazoncorretto/amazoncorretto:17-alpine AS builder
+FROM public.ecr.aws/corretto/corretto:17 AS builder
 WORKDIR /app
 COPY pom.xml .
 COPY .mvn/ .mvn/
@@ -7,9 +7,9 @@ RUN ./mvnw dependency:go-offline -q
 COPY src/ src/
 RUN ./mvnw package -DskipTests -q
 
-FROM public.ecr.aws/amazoncorretto/amazoncorretto:17-alpine
+FROM public.ecr.aws/corretto/corretto:17
 WORKDIR /app
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+RUN groupadd -r appgroup && useradd -r -g appgroup appuser
 USER appuser
 VOLUME /tmp
 COPY --from=builder /app/target/*.jar app.jar
