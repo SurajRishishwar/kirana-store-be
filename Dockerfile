@@ -8,12 +8,10 @@ RUN chmod +x mvnw
 RUN ./mvnw dependency:go-offline -q
 COPY src/ src/
 RUN ./mvnw package -DskipTests -q
-RUN ls -la /app/target/
 
 FROM public.ecr.aws/amazoncorretto/amazoncorretto:17
 WORKDIR /app
 VOLUME /tmp
-COPY --from=builder /app/target/*.jar app.jar
-RUN ls -la /app/
+COPY --from=builder /app/target/backend-1.0.0.jar app.jar
 EXPOSE 8081
 ENTRYPOINT ["java", "-jar", "/app.jar"]
