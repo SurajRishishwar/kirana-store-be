@@ -6,7 +6,7 @@ phases:
     commands:
       - |
         set -e
-        echo "Logging in to ECR Public..."
+        echo "Logging in to ECR Public... new with new entry point in dockerfile"
         aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws
 
         echo "Building Docker image..."
