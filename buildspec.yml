@@ -5,16 +5,22 @@ phases:
   pre_build:
     commands:
       - |
+        set -e
         echo "Logging in to ECR Public (to avoid Docker Hub rate limits)..."
         aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws
 
         echo "Building Docker image..."
         docker build -t kirana-image:latest -f Dockerfile .
-        echo "Image built successfully"
+
+        echo "Verifying JAR inside image..."
+        docker run --rm kirana-image:latest ls -la /app/
+
+        echo "Image built and verified successfully"
 
   build:
     commands:
       - |
+        set -e
         export ECR_URI="505038841552.dkr.ecr.us-west-2.amazonaws.com/kirana-be"
         echo "ECR_URI: ${ECR_URI}"
 
