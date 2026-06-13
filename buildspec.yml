@@ -6,14 +6,14 @@ phases:
     commands:
       - |
         set -e
-        echo "Logging in to ECR Public (to avoid Docker Hub rate limits)..."
+        echo "Logging in to ECR Public..."
         aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws
 
         echo "Building Docker image..."
         docker build -t kirana-image:latest -f Dockerfile .
 
         echo "Verifying JAR inside image..."
-        docker run --rm kirana-image:latest ls -la /app/
+        docker run --rm --entrypoint ls kirana-image:latest -la /app/
 
         echo "Image built and verified successfully"
 
